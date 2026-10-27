@@ -4,11 +4,13 @@
   
   
 
+
 import {
     getAuth,
     createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
     signOut,
-    signInWithEmailAndPassword
+    onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
 
 
@@ -112,6 +114,20 @@ const signout = async () => {
 
 document.getElementById("signout")
     ?.addEventListener("click", signout);
+
+    
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+
+    const isDashboard = window.location.pathname.endsWith("dashboard.html");
+
+    if (isDashboard && !user) {
+        window.location.href = "./login.html";
+    }
+
+});
+
 
 
 
